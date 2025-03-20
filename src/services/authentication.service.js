@@ -4,6 +4,12 @@ export class AuthenticationService {
     constructor(cognitoClient, clientId) {
         this.cognitoClient = cognitoClient;
         this.clientId = clientId;
+
+        if (!this.cognitoClient)
+            throw new Error('Cognito client is required');
+
+        if (!this.clientId)
+            throw new Error('Cognito client ID is required');
     }
 
     async authenticate(username, password) {
@@ -17,6 +23,7 @@ export class AuthenticationService {
         });
 
         const authResponse = await this.cognitoClient.send(command);
+        console.log(authResponse)
         return authResponse?.AuthenticationResult?.AccessToken;
     }
 }
