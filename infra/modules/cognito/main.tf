@@ -1,19 +1,6 @@
 resource "aws_cognito_user_pool" "user_pool" {
   name                     = "fastfood-auth-user-pool"
   auto_verified_attributes = ["email"]
-  username_attributes      = ["email"]
-
-  schema {
-    name                = "email"
-    attribute_data_type = "String"
-    required            = true
-  }
-
-  schema {
-    name                = "username"
-    attribute_data_type = "String"
-    required            = true
-  }
 }
 
 resource "aws_cognito_user_pool_client" "user_pool_client" {
