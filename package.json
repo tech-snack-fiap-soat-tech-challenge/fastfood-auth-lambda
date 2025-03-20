@@ -1,14 +1,8 @@
 {
   "name": "fastfood-auth-lambda",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
-  "scripts": {
-    "tf:init": "terraform -chdir=infra init",
-    "tf:plan": "terraform -chdir=infra plan",
-    "tf:apply": "terraform -chdir=infra apply -auto-approve",
-    "tf:destroy": "terraform -chdir=infra destroy",
-    "tf:refresh": "terraform -chdir=infra refresh",
+  "scripts": {    
     "build:package": "powershell Compress-Archive -Path src,node_modules,package.json,package-lock.json -DestinationPath lambda_package.zip -Force"
   },
   "repository": {
