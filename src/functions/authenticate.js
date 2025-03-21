@@ -13,7 +13,7 @@ export const handler = async (event) => {
             throw new MissingCredentialsException();
         }
 
-        const cognitoClient = new CognitoIdentityProvider({region:process.env.COGNITO_REGION});
+        const cognitoClient = new CognitoIdentityProvider({ region: process.env.COGNITO_REGION });
         const authService = new AuthenticationService(cognitoClient, process.env.COGNITO_CLIENT_ID);
         const result = await authService.authenticate(userName, password);
 
@@ -30,9 +30,6 @@ export const handler = async (event) => {
         };
 
     } catch (error) {
-        // Logando o erro para análise
-        console.error('Authentication Error:', error);
-
         if (error.name === 'MissingCredentialsException') {
             return {
                 statusCode: 400,
@@ -43,7 +40,6 @@ export const handler = async (event) => {
             };
         }
 
-        // Tratamento específico de erro do Cognito
         if (error.name === 'NotAuthorizedException') {
             return {
                 statusCode: 401,
@@ -54,7 +50,6 @@ export const handler = async (event) => {
             };
         }
 
-        // Verifica se o erro é do tipo "InvalidParameterException" ou outro erro específico de parâmetros
         if (error.name === 'InvalidParameterException') {
             return {
                 statusCode: 400,
@@ -65,14 +60,11 @@ export const handler = async (event) => {
             };
         }
 
-        // Caso o erro seja desconhecido, retornamos erro genérico do servidor
         return {
             statusCode: 500,
             body: JSON.stringify({
                 title: 'Internal Server Error',
-                message: error.message,
-                // Em produção, pode-se ocultar detalhes técnicos do erro
-                // stack: error.stack, // Apenas para ambientes de desenvolvimento
+                message: error.message
             }),
         };
     }
