@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS EKS
+name: Deploy Fast Food Auth Lambda
 
 on:
   push:
