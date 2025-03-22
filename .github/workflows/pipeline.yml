@@ -1,0 +1,58 @@
+name: Deploy Fast Food Auth Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código-fonte
+        uses: actions/checkout@v4
+
+      - name: Instalar NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Zipar arquivos
+        run: zip -r lambda_package.zip src node_modules package.json package-lock.json
+
+      - name: Upload de artefatos da Lambda
+        uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: lambda_package.zip
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Baixar Artefatos
+        uses: actions/download-artifact@v4
+        with:
+          name: output
+
+      - name: Configurar AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy lambda Zip
+        uses: appleboy/lambda-action@v0.2.0
+        with:
+          function_name: fastfood-auth-lambda
+          zip_file: lambda_package.zip
+          dry_run: false
