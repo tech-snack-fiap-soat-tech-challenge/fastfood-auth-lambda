@@ -7,25 +7,7 @@ export const handler = async (event) => {
     const { userName, password } = event;
 
     try {
-        if (!userName || !password) {
-            throw new MissingCredentialsException();
-        }
-
-        const cognitoClient = new CognitoIdentityProvider({ region: process.env.COGNITO_REGION });
-        const authService = new AuthenticationService(cognitoClient, process.env.COGNITO_CLIENT_ID);
-        const result = await authService.authenticate(userName, password);
-
-        if (!result) {
-            return {
-                statusCode: 401,
-                body: JSON.stringify({ message: 'Invalid credentials' }),
-            };
-        }
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ accessToken: result }),
-        };
+       //Teste Deploy
 
     } catch (error) {
         if (error.name === 'MissingCredentialsException') {
