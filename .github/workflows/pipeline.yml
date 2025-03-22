@@ -26,12 +26,12 @@ jobs:
         run: npm install
 
       - name: Zipar arquivos
-        run: zip -r output.zip src node_modules package.json package-lock.json
+        run: zip -r lambda_package.zip src node_modules package.json package-lock.json
 
       - name: Upload de artefatos da Lambda
         uses: actions/upload-artifact@v4
         with:
-          name: lambda_package
+          name: output
           path: lambda_package.zip
 
   deploy:
@@ -43,7 +43,7 @@ jobs:
       - name: Baixar Artefatos
         uses: actions/download-artifact@v4
         with:
-          name: lambda_package
+          name: output
       - name: Deploy lambda Zip
         uses: appleboy/lambda-action@v0.2.0
         with:
