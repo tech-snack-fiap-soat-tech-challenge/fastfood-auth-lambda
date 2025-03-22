@@ -1,0 +1,23 @@
+{
+  "name": "fastfood-auth-lambda",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {    
+    "build:package": "powershell Compress-Archive -Path src,node_modules,package.json,package-lock.json -DestinationPath lambda_package.zip -Force"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tech-snack-fiap-soat-tech-challenge/fastfood-auth-lambda.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tech-snack-fiap-soat-tech-challenge/fastfood-auth-lambda/issues"
+  },
+  "homepage": "https://github.com/tech-snack-fiap-soat-tech-challenge/fastfood-auth-lambda#readme",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.768.0",
+    "amazon-cognito-identity-js": "^6.3.12"
+  }
+}
