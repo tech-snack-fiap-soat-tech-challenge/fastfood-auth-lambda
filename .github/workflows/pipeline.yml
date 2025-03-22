@@ -57,4 +57,4 @@ jobs:
         with:
           function_name: fastfood-auth-lambda
           zip_file: lambda_package.zip
-          dry_run: true
+          dry_run: false
