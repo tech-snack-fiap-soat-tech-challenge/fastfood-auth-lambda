@@ -2,8 +2,12 @@ import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provid
 import { AuthenticationService } from '../services/authentication.service.js';
 import { MissingCredentialsException } from '../exceptions/missing-credentials.exception.js';
 
+/**
+ * @param {Object} event - API Gateway Lambda Proxy Input Format
+ * @returns {Object} object - API Gateway Lambda Proxy Output Format
+ */
 export const handler = async (event) => {
-  const { userName, password } = event;
+  const { userName, password } = JSON.parse(event.body);
 
   try {
     if (!userName || !password) {
